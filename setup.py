@@ -48,7 +48,9 @@ setup(
     classifiers=[
             "Programming Language :: Python :: 3"
     ],
-    install_requires=[],
+    install_requires=[
+            "PyYaml==3.12"
+    ],
     long_description=long_description,
     name="argmagic",
     version="2017.1",
