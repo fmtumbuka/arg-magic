@@ -3,6 +3,10 @@
 """The root of the python package argmagic."""
 
 
+from argmagic.arg_tools import get_config
+from argmagic.arg_tools import parse_args
+
+
 __author__ = "Patrick Hohenecker"
 __copyright__ = \
         """
