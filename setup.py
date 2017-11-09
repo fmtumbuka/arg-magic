@@ -48,11 +48,12 @@ setup(
                 "Programming Language :: Python :: 3"
         ],
         install_requires=[
+                "insanity>=2017.1",
                 "PyYaml==3.12"
         ],
         long_description=long_description,
         name="argmagic",
         version="2017.1",
         package_dir={"": "src/main/python"},
-        packages=["argmagic"]
+        packages=["argmagic", "argmagic.parsing"]
 )
