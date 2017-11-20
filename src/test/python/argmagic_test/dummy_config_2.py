@@ -65,7 +65,6 @@ class DummyConfig2(object):
     def a(self, a):
         self._a = a
 
-    @decorators.position(2)
     @property
     def b(self):
         return self._b

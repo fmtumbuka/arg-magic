@@ -43,6 +43,22 @@ __email__ = "mail@paho.at"
 __status__ = "Development"
 
 
+def optional(func: property) -> property:
+    """This decorator marks a property of a configuration class as optional.
+    
+    The use of this decorator is necessary in order to prevent an optional configuration without default value from
+    being interpreted as a required one.
+    """
+    # make sure that the annotated function is a property
+    if not isinstance(func, property):
+        raise TypeError("The decorator @optional can be applied to properties only!")
+    
+    # mark annotated property as optional
+    func.fget.__dict__[argmagic.OPTIONAL_KEY] = True
+    
+    return func
+
+
 def exhaustive(values: type) -> typing.Callable[[property], property]:
     """This is a decorator that allows for annotating a property of a configuration class with an ``Enum`` that
     describes the admissible values of the same.

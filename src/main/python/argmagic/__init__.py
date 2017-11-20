@@ -45,6 +45,9 @@ CONFIG_VALUES = "argmagic.config_values"
 DEFAULT_PREFIX = "DEFAULT_"
 """str: A prefix that identifies class variables as default values."""
 
+OPTIONAL_KEY = "argmagic.optional"
+"""str: The key that is used for storing that an arg is optional."""
+
 POSITION = "argmagic.position"
 """str: The key that is used for storing the position of positional args."""
 

@@ -114,6 +114,7 @@ class ConfigSpec(object):
             description = None
             default_value = None
             position = None
+            required = None
     
             # fetch and parse summary line of docstring
             if field.__doc__ is not None:
@@ -140,6 +141,10 @@ class ConfigSpec(object):
             if argmagic.POSITION in field.fget.__dict__:
                 position = field.fget.__dict__[argmagic.POSITION]
             
+            # check if the field has been marked as optional
+            if argmagic.OPTIONAL_KEY in field.fget.__dict__:
+                required = not field.fget.__dict__[argmagic.OPTIONAL_KEY]
+            
             # add configuration to specification
             spec.add_config(
                     config_value.ConfigValue(
@@ -147,7 +152,8 @@ class ConfigSpec(object):
                             description,
                             data_type,
                             default_value=default_value,
-                            position=position
+                            position=position,
+                            required=required
                     )
             )
         

@@ -46,7 +46,8 @@ class ConfigValue(object):
             description: str,
             data_type: type,
             default_value=None,
-            position: int=None
+            position: int=None,
+            required: bool=None
     ):
         """Creates a new instance of ``ConfigValue``.
         
@@ -56,6 +57,7 @@ class ConfigValue(object):
             data_type (type): Specifies :attr:`data_type`.
             default_value (optional): Specifies :attr:`default_value`.
             position (int, optional): Specifies :attr:`position`.
+            required (bool, optional): Specifies :attr:`required`.
         
         Raises:
             ValueError: If ``data_type`` is ``bool`` and ``default_value`` is ``None``.
@@ -75,6 +77,8 @@ class ConfigValue(object):
         self.data_type = data_type
         self.default_value = default_value
         self.position = position
+        if required is not None:
+            self.required = required
         
         # if the config value has type bool, then a default value needs to be present
         if self.data_type == bool and self.default_value is None:
@@ -127,7 +131,8 @@ class ConfigValue(object):
     @default_value.setter
     def default_value(self, default_value) -> None:
         self._default_value = default_value
-        self._required = default_value is None
+        if self._required is None:
+            self._required = default_value is None
     
     @property
     def description(self) -> str:
@@ -175,6 +180,10 @@ class ConfigValue(object):
     def required(self) -> bool:
         """bool: Indicates whether the specified configuration has to be provided by a user.
         
-        This is the case if and only if no :attr:`default_value` is specified.
+        If not specified explicitly, then this is the case if and only if no :attr:`default_value` is specified.
         """
         return self._required
+    
+    @required.setter
+    def required(self, required: bool) -> None:
+        self._required = bool(required)

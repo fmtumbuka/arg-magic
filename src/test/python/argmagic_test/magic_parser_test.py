@@ -8,6 +8,7 @@ import sys
 from argmagic import magic_parser
 from argmagic_test import dummy_config
 from argmagic_test import dummy_config_2
+from argmagic_test import dummy_config_3
 
 
 __author__ = "Patrick Hohenecker"
@@ -52,14 +53,14 @@ class MagicParserTest(unittest.TestCase):
         target.y = "abc"
         # z is NOT specified
         
-        # TEST: parse config using positional args
+        # CHECK: parse config using positional args
         sys.argv = "test --x TRES abc".split(" ")
         self.assertEqual(
                 target,
                 magic_parser.MagicParser(dummy_config.DummyConfig, positional_args=True).parse_args()
         )
         
-        # TEST: parse config without positional args
+        # CHECK: parse config without positional args
         sys.argv = "test --y abc --x TRES".split(" ")
         self.assertEqual(
                 target,
@@ -72,11 +73,30 @@ class MagicParserTest(unittest.TestCase):
         target.b = "2"
         target.c = "3"
 
-        # parse args
+        # CHECK: positional args with specified order are parsed correctly
         sys.argv = "test 3 1 2".split(" ")
-        parsed = magic_parser.MagicParser(dummy_config_2.DummyConfig2).parse_args()
+        self.assertEqual(
+                target,
+                magic_parser.MagicParser(dummy_config_2.DummyConfig2).parse_args()
+        )
+        
+        # create target config object
+        target = dummy_config_3.DummyConfig3()
+        target.a = "1"
+        target.b = 2.0
 
-        self.assertEqual(target, parsed)
+        # CHECK: optional args without default value are parsed correctly
+        sys.argv = "test --a 1 2".split(" ")
+        self.assertEqual(
+                target,
+                magic_parser.MagicParser(dummy_config_3.DummyConfig3).parse_args()
+        )
+        target.c = 3
+        sys.argv = "test --a 1 --c 3 2".split(" ")
+        self.assertEqual(
+                target,
+                magic_parser.MagicParser(dummy_config_3.DummyConfig3).parse_args()
+        )
     
 
 if __name__ == "__main__":

@@ -143,7 +143,14 @@ class MagicParser(object):
         
         # create and populate configuration object
         conf = self._conf_class()
-        for prop in self._spec.keys():
-            setattr(conf, prop, getattr(args, prop))
+        for config_value in self._spec:
+            # get parsed value for current config value
+            value = getattr(args, config_value.name)
+            
+            # if current config value is optional and no value was provided -> skip
+            if not config_value.required and value is None:
+                continue
+            
+            setattr(conf, config_value.name, value)
     
         return conf

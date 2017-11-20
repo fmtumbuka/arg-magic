@@ -8,6 +8,7 @@ import argmagic
 
 from argmagic_test import dummy_config
 from argmagic_test import dummy_config_2
+from argmagic_test import dummy_config_3
 from argmagic_test import dummy_enum
 
 
@@ -47,6 +48,12 @@ class DecoratorsTest(unittest.TestCase):
         self.assertEqual(
                 dummy_enum.DummyEnum,
                 dummy_config.DummyConfig.x.fget.__dict__[argmagic.CONFIG_VALUES]
+        )
+    
+    def test_optional(self):
+        self.assertEqual(
+                True,
+                dummy_config_3.DummyConfig3.c.fget.__dict__[argmagic.OPTIONAL_KEY]
         )
 
     def test_position(self):
