@@ -3,6 +3,7 @@
 
 import argparse
 import collections
+import re
 import typing
 
 import insanity
@@ -45,6 +46,11 @@ __status__ = "Development"
 class MagicParser(object):
     """TODO"""
     # TODO
+    
+    ARG_VALUE_REGEX = r"\<[^\>]+\>"
+    """str: A regex that matches parameters of the format <param_name> in error messages created by the insanity
+    package.
+    """
     
     #  CONSTRUCTOR  ####################################################################################################
     
@@ -138,19 +144,27 @@ class MagicParser(object):
         Returns:
             The parsed configuration.
         """
-        # parse args
-        args = self._parser.parse_args()
+        try:
+            # parse args
+            args = self._parser.parse_args()
+            
+            # create and populate configuration object
+            conf = self._conf_class()
+            for config_value in self._spec:
+                # get parsed value for current config value
+                value = getattr(args, config_value.name)
+                
+                # if current config value is optional and no value was provided -> skip
+                if not config_value.required and value is None:
+                    continue
+                
+                setattr(conf, config_value.name, value)
         
-        # create and populate configuration object
-        conf = self._conf_class()
-        for config_value in self._spec:
-            # get parsed value for current config value
-            value = getattr(args, config_value.name)
-            
-            # if current config value is optional and no value was provided -> skip
-            if not config_value.required and value is None:
-                continue
-            
-            setattr(conf, config_value.name, value)
-    
-        return conf
+            return conf
+        except (TypeError, ValueError) as e:
+            error_msg = re.sub(
+                    self.ARG_VALUE_REGEX,
+                    lambda m: m.group(0)[1:-1].upper(),  # maps <param_name> -> PARAM_NAME
+                    str(e)
+            )
+            self._parser.error(error_msg)
