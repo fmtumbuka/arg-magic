@@ -48,6 +48,11 @@ class DefaultParserFactory(parser_factory.ParserFactory):
     configurations whose admissible values are given by means of an ``Enum`` can be handled by instances of this class.
     """
     
+    SUPPORTED_TYPES = [bool, str, int, float, dict, list]
+    """list[type]: A list of all data types that are supported by a ``DefaultParserFactory``."""
+    
+    #  CONSTRUCTOR  ####################################################################################################
+    
     def __init__(self, positional_args: bool):
         """Creates a new instance of ``DefaultParserFactory``.
         
@@ -73,11 +78,9 @@ class DefaultParserFactory(parser_factory.ParserFactory):
         insanity.sanitize_type("config", config, config_value.ConfigValue)
         
         # check if the type of the provided config is supported
-        if not issubclass(config.data_type, enum.Enum) and config.data_type not in [str, int, float, dict, list]:
+        if not issubclass(config.data_type, enum.Enum) and config.data_type not in self.SUPPORTED_TYPES:
             raise ValueError(
-                    "The data type of the provided <config> is not supported: {}!".format(
-                            type(config.data_type).__qualname__
-                    )
+                    "The data type of the provided <config> is not supported: {}!".format(config.data_type.__qualname__)
             )
 
         # the names of the command line args are simply those of the corresponding config values where
