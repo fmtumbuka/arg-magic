@@ -96,17 +96,17 @@ class DefaultParserFactory(parser_factory.ParserFactory):
             if config.default_value:
                 arg_name = "--no-" + arg_name[2:]
             parser.add_argument(
-                arg_name,
-                dest=config.name,
-                action="store_const",
-                const=not config.default_value,
-                default=config.default_value,
-                help=config.description
+                    arg_name,
+                    dest=config.name,
+                    action="store_const",
+                    const=not config.default_value,
+                    default=config.default_value,
+                    help=config.description
             )
         else:
             if config.exhaustive:
                 arg_type = self._enum_type(config.data_type)
-            elif config.data_type == dict:
+            elif config.data_type == dict or config.data_type == list:
                 arg_type = yaml.load
             else:
                 arg_type = config.data_type
