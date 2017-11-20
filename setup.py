@@ -45,15 +45,24 @@ setup(
         author="Patrick Hohenecker",
         author_email="mail@paho.at",
         classifiers=[
+                "License :: OSI Approved :: MIT License",
                 "Programming Language :: Python :: 3"
         ],
+        copyright="Copyright (c) 2017 Patrick Hohenecker",
+        data_files=[
+                    (".", ["LICENSE", "README.md"])
+        ],
+        description="Tools for defining and parsing command-line args automatically based on a configuration class.",
+        download_url="https://github.com/phohenecker/arg-magic/archive/v2017.1.tar.gz",
         install_requires=[
                 "insanity>=2017.1",
                 "PyYaml==3.12"
         ],
+        license="MIT License",
         long_description=long_description,
         name="argmagic",
-        version="2017.1",
         package_dir={"": "src/main/python"},
-        packages=["argmagic", "argmagic.parsing"]
+        packages=["argmagic", "argmagic.parsing"],
+        url="https://github.com/phohenecker/arg-magic",
+        version="2017.1"
 )
