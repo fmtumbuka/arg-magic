@@ -137,6 +137,27 @@ class MagicParser(object):
     
     #  METHODS  ########################################################################################################
     
+    def error(self, msg: typing.Optional[str]) -> None:
+        """Prints a usage message incorporating the provided error message to stderr and exits.
+        
+        If the provided message contains the names of fields in the used configuration class, then these should be
+        put between angle angle brackets, e.g., ``<some_config>``. An such reference will be automatically replaced with
+        the name that is printed for the respective config in the application's synopsis.
+        
+        Args:
+            msg (str): The error message to include in the output.
+        """
+        # reformat parameter names such that they match the names that are printed in the synopsis
+        if msg is not None:
+            msg = re.sub(
+                    self.ARG_VALUE_REGEX,
+                    lambda m: m.group(0)[1:-1].upper(),  # maps <param_name> -> PARAM_NAME
+                    msg
+            )
+        
+        # call error function of the used parser
+        self._parser.error(msg)
+    
     def parse_args(self):
         """Parses the args of the current application based on the configuration class that was handed to the
         ``MagicParser``, and returns an instance of this very class that has been populated accordingly.
@@ -162,9 +183,4 @@ class MagicParser(object):
         
             return conf
         except (TypeError, ValueError) as e:
-            error_msg = re.sub(
-                    self.ARG_VALUE_REGEX,
-                    lambda m: m.group(0)[1:-1].upper(),  # maps <param_name> -> PARAM_NAME
-                    str(e)
-            )
-            self._parser.error(error_msg)
+            self.error(str(e))
