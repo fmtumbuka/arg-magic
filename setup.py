@@ -50,7 +50,7 @@ setup(
         ],
         copyright="Copyright (c) 2017 Patrick Hohenecker",
         data_files=[
-                    (".", ["LICENSE", "README.md"])
+                (".", ["LICENSE", "README.md"])
         ],
         description="Tools for defining and parsing command-line args automagically based on a configuration class.",
         download_url="https://github.com/phohenecker/arg-magic/archive/v2017.1.tar.gz",
@@ -62,7 +62,10 @@ setup(
         long_description=long_description,
         name="argmagic",
         package_dir={"": "src/main/python"},
-        packages=["argmagic", "argmagic.parsing"],
+        packages=[
+                "argmagic",
+                "argmagic.parsing"
+        ],
         url="https://github.com/phohenecker/arg-magic",
         version="2017.1"
 )
