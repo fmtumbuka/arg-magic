@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""The root of the python package argmagic."""
+"""Tools for defining and parsing command-line args automagically based on a configuration class."""
 
 
 import inspect

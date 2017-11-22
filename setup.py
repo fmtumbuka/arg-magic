@@ -52,7 +52,7 @@ setup(
         data_files=[
                     (".", ["LICENSE", "README.md"])
         ],
-        description="Tools for defining and parsing command-line args automatically based on a configuration class.",
+        description="Tools for defining and parsing command-line args automagically based on a configuration class.",
         download_url="https://github.com/phohenecker/arg-magic/archive/v2017.1.tar.gz",
         install_requires=[
                 "insanity>=2017.1",
