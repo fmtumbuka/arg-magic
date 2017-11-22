@@ -30,4 +30,4 @@ dependencies:
   - python>=3.6
   - PyYAML>=3.12
   - pip:
-    - git+https://github.com/phohenecker/in-sanity
+    - insanity>=2017.1
