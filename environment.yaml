@@ -28,6 +28,6 @@
 name: arg-magic
 dependencies:
   - python>=3.6
-  - PyYAML>=3.12
+  - PyYAML>=3.13
   - pip:
     - insanity>=2017.1

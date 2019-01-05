@@ -56,7 +56,7 @@ setup(
         download_url="https://github.com/phohenecker/arg-magic/archive/v2017.1.tar.gz",
         install_requires=[
                 "insanity>=2017.1",
-                "PyYaml==3.12"
+                "PyYAML>=3.13"
         ],
         license="MIT License",
         long_description=long_description,
