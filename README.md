@@ -1,2 +1,3 @@
 # arg-magic
-A package for defining and parsing args automatically based on a configuration class.
+
+This project is continued [here](https://github.com/phohenecker/arg-magiq).
